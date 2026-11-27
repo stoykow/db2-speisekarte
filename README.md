@@ -7,6 +7,7 @@ Lege im Browser eine Kategorie und ein Gericht an. PHP speichert beides in Maria
 ## Handout zum Nachlesen
 
 - Speisekarten-Handout als [Markdown](02-handout-speisekarte.md), [PDF](02-handout-speisekarte.pdf) oder [Word-Datei](02-handout-speisekarte.docx)
+- Übungs-Handout als [Markdown](03-handout-uebungen.md), [PDF](03-handout-uebungen.pdf) oder [Word-Datei](03-handout-uebungen.docx)
 
 Ersetze `docker.local` in den Adressen durch den Hostnamen oder die IP deiner VM, falls du einen anderen Namen verwendest.
 
