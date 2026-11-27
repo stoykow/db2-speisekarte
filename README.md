@@ -45,6 +45,7 @@ Wenn du später einen Text, das Layout oder den PHP-Code änderst, bearbeitest d
 
 4. **Den Code zeigen.** [datenbank.php](config/datenbank.php) verbindet PHP mit MariaDB und legt beide Tabellen an. [index.php](html/index.php) speichert Formulareingaben mit `INSERT` und liest die Karte per `LEFT JOIN`. Eine Kategorie kann mehrere Gerichte enthalten. Jedes Gericht gehört zu einer Kategorie.
 5. **Im Browser weiterarbeiten.** Das [Speisekarten-Handout](02-handout-speisekarte.md) führt Schritt für Schritt durch die Preisänderung im SQL-Tab. Auf der Karte vergleichst du das Ergebnis nach dem Neuladen.
+6. **Mit mehr Daten üben.** Das [Übungs-Handout](03-handout-uebungen.md) verlinkt den [SQL-Import der Rhodos-Speisekarte](sql/02-rhodos-speisekarte-import.sql). Er ergänzt fehlende Gerichte und Kategorien. Danach kannst du filtern, verknüpfen, zählen und Preise in Transaktionen bearbeiten.
 
 ## Tabellen im Überblick
 
@@ -60,5 +61,5 @@ Die ID eines Gerichts entspricht seiner Nummer auf der Webseite. Der Preis ist e
 - [Portainer-Dokumentation zum Webeditor](https://docs.portainer.io/user/docker/stacks/add)
 - [Docker-Dokumentation zu Variablen in Compose](https://docs.docker.com/reference/compose-file/interpolation/)
 - [phpMyAdmin-Dokumentation zur Docker-Konfiguration](https://docs.phpmyadmin.net/en/release_5_2_0/setup.html#installing-using-docker)
-- Das Layout orientiert sich an einer gedruckten Speisekarte. Gerichte und Preise sind fiktive Übungsdaten.
+- Kräuterpita und weitere manuell angelegte Beispiele sind fiktive Übungsdaten. Der optionale SQL-Import enthält die Rhodos-Speisekarte mit Stand vom 04.10.2026. Die Preise geben diesen Datenstand wieder.
 - KI-Unterstützung bei der Erstellung und Prüfung dieses Laborbeispiels.
