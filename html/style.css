@@ -1,0 +1,206 @@
+/* Warmer Hintergrund und dunkelblaue Schrift wie bei einer gedruckten Karte. */
+:root {
+    color-scheme: light;
+    --papier: #f7f2e8;
+    --weiss: #fffdf8;
+    --tinte: #173e50;
+    --sekundaer: #495c63;
+    --linie: #d9cfbd;
+    --akzent: #794a2c;
+    --serif: Georgia, "Times New Roman", serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--papier);
+    color: var(--tinte);
+    font: 1rem/1.5 system-ui, sans-serif;
+}
+
+.rahmen {
+    width: min(100% - 2rem, 70rem);
+    margin-inline: auto;
+}
+
+.kopf {
+    background: var(--tinte);
+    color: var(--weiss);
+    border-bottom: 4px solid #b68b60;
+}
+
+.kopf-inhalt {
+    min-height: 12rem;
+    padding-block: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+}
+
+.kurs {
+    margin: 0 0 0.3rem;
+    color: #f0d6bb;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+    font-family: var(--serif);
+    line-height: 1.15;
+}
+
+h1 {
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-weight: 400;
+}
+
+.sprung {
+    color: inherit;
+    text-underline-offset: 0.25em;
+}
+
+.aufteilung {
+    display: grid;
+    align-items: start;
+    gap: 1.25rem;
+    padding-block: 2rem 3rem;
+}
+
+@media (min-width: 54rem) {
+    .aufteilung {
+        grid-template-columns: minmax(0, 1fr) minmax(16rem, 21rem);
+        gap: 2rem;
+    }
+}
+
+.karte,
+.pflege {
+    min-width: 0;
+    border: 1px solid var(--linie);
+    border-radius: 0.5rem;
+    background: var(--weiss);
+    padding: clamp(1rem, 4vw, 2rem);
+}
+
+.kategorie + .kategorie {
+    margin-top: 2rem;
+}
+
+.kategorie h2 {
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--linie);
+    font-size: 1.8rem;
+}
+
+.gerichte {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Der Preis behält eine eigene Spalte, auch bei langem Namen. */
+.gericht {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.8rem;
+    padding-block: 0.9rem;
+    align-items: start;
+    overflow-wrap: anywhere;
+}
+
+.gericht + .gericht {
+    border-top: 1px dashed var(--linie);
+}
+
+.nummer {
+    color: var(--akzent);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.gericht h3 {
+    font-size: 1.25rem;
+}
+
+.gericht p,
+.leer {
+    color: var(--sekundaer);
+    margin: 0.25rem 0 0;
+}
+
+.preis {
+    padding-top: 0.25rem;
+    white-space: nowrap;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.pflege form {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 1.1rem;
+}
+
+.pflege form + form {
+    border-top: 1px solid var(--linie);
+    padding-top: 1.1rem;
+}
+
+.pflege label {
+    margin-top: 0.35rem;
+    font-weight: 650;
+    font-size: 0.9rem;
+}
+
+.eingabe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.eingabe input {
+    flex: 1 1 8rem;
+}
+
+input,
+select,
+button {
+    min-width: 0;
+    padding: 0.55rem;
+    border: 1px solid #a7957d;
+    border-radius: 0.25rem;
+    color: inherit;
+    background: var(--weiss);
+    font: inherit;
+}
+
+button {
+    justify-self: start;
+    margin-top: 0.15rem;
+    padding-inline: 0.9rem;
+    border-color: var(--tinte);
+    background: var(--tinte);
+    color: var(--weiss);
+    cursor: pointer;
+}
+
+:focus-visible {
+    outline: 2px solid #9b530f;
+    outline-offset: 3px;
+}
+
+.meldung {
+    padding: 0.65rem;
+    border-left: 3px solid #8d3429;
+    background: #f9ebe4;
+    color: #782c24;
+}

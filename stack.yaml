@@ -1,0 +1,92 @@
+# Portainer: Stacks > Add stack > Web editor, Name: datenbank-demo.
+# Starte zuerst den Stack. Docker legt die Quellordner bei Bedarf an.
+# Kopiere danach die Projektdateien per SMB nach /srv/docker/Speisekarte.
+# Trage DEMO_DB_PASSWORT unten über Add environment variable ein.
+# Speisekarte im Labor: http://docker.local:8090/
+# SQL-Tab in phpMyAdmin: http://docker.local:8091/
+
+services:
+  # web nimmt die Anfragen aus dem Browser an und führt den PHP-Code aus.
+  web:
+    image: php:8.4-apache
+    restart: unless-stopped
+    # Starte PHP erst, wenn die Prüfung des Datenbankdienstes erfolgreich ist.
+    depends_on:
+      db:
+        condition: service_healthy
+    # Links steht der Port der Debian-VM, rechts der HTTP-Port im Container.
+    ports:
+      - "8090:80"
+    # PHP liest diese Werte per getenv(). db ist der interne Dienstname.
+    # Der Platzhalter beim Passwort übernimmt den Wert aus Portainer.
+    environment:
+      DB_HOST: db
+      DB_NAME: datenbank_demo
+      DB_USER: demo_app
+      DB_PASSWORD: "${DEMO_DB_PASSWORT:?Datenbankpasswort fehlt}"
+    # Docker legt fehlende Quellordner auf der VM an, damit der Stack zuerst starten kann.
+    # Apache liest html. PHP liest config außerhalb des öffentlichen Webordners.
+    volumes:
+      - type: bind
+        source: /srv/docker/Speisekarte/html
+        target: /var/www/html
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /srv/docker/Speisekarte/config
+        target: /var/www/config
+        read_only: true
+        bind:
+          create_host_path: true
+    # Installiere beim ersten Start des Containers den MariaDB-Treiber für PHP.
+    command:
+      - sh
+      - -ec
+      - |
+        if ! php -m | grep -qx pdo_mysql; then
+          docker-php-ext-install pdo_mysql
+        fi
+        exec apache2-foreground
+
+  # db speichert die Daten. PHP erreicht den Dienst über das interne Stack-Netz.
+  db:
+    image: mariadb:11.8
+    restart: unless-stopped
+    # MariaDB legt Datenbank und Benutzer beim ersten Start mit leerem Volume an.
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+      MARIADB_ROOT_HOST: localhost
+      MARIADB_DATABASE: datenbank_demo
+      MARIADB_USER: demo_app
+      MARIADB_PASSWORD: "${DEMO_DB_PASSWORT:?Datenbankpasswort fehlt}"
+    volumes:
+      - demo_daten:/var/lib/mysql
+    # Prüft, ob MariaDB Verbindungen annimmt und InnoDB bereit ist.
+    healthcheck:
+      test:
+        - CMD
+        - healthcheck.sh
+        - --connect
+        - --innodb_initialized
+      start_period: 45s
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # phpMyAdmin verbindet sich über das Stack-Netz mit derselben MariaDB wie PHP.
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_PORT: "3306"
+    ports:
+      - "8091:80"
+
+# Im Volume bleiben die Tabellen erhalten, wenn der Container ersetzt wird.
+volumes:
+  demo_daten:
