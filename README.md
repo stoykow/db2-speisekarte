@@ -4,9 +4,8 @@ Lege im Browser eine Kategorie und ein Gericht an. PHP speichert beides in Maria
 
 **Voraussetzung.** Die Debian-Docker-VM mit Portainer und der SMB-Freigabe `docker` ist eingerichtet. Die Freigabe zeigt auf `/srv/docker` und dein SMB-Konto darf dort schreiben.
 
-## Dateien zum Kopieren und zum Nachlesen
+## Handout zum Nachlesen
 
-- [ZIP mit Web-, Konfigurations- und SQL-Dateien](ordner.zip)
 - Speisekarten-Handout als [Markdown](02-handout-speisekarte.md), [PDF](02-handout-speisekarte.pdf) oder [Word-Datei](02-handout-speisekarte.docx)
 
 Ersetze `docker.local` in den Adressen durch den Hostnamen oder die IP deiner VM, falls du einen anderen Namen verwendest.
